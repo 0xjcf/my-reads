@@ -8,17 +8,34 @@ import ActivateSearch from "./ActivateSearch";
 
 class BooksApp extends React.Component {
   state = {
-    books: []
+    currentlyReading: [],
+    wantToRead: [],
+    read: [],
   };
 
-  componentDidMount() {
-    BooksAPI.getAll().then(books => {
-      books.map(book => {
-        return this.setState(prevState => ({
-          books: [...prevState.books, book]
-        }));
-      });
-    });
+  async componentWillMount() {
+    const response = await BooksAPI.getAll().then(books => books);
+    const currentBooks = this.readingNow(response);
+    const wantToBooks = this.willRead(response);
+    const readBooks = this.haveRead(response);
+    this.setState({
+      currentlyReading: currentBooks,
+      wantToRead: wantToBooks,
+      read: readBooks
+    })
+    console.log(this.state);
+  }
+
+  readingNow = (books) => {
+    return books.filter(book => book.shelf === "currentlyReading")
+  };
+
+  willRead = (books) => {
+    return books.filter(book => book.shelf === "wantToRead")
+  }
+
+  haveRead = (books) => {
+    return books.filter(book => book.shelf === "read")
   }
 
   render() {

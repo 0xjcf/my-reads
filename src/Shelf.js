@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Book from "./Book";
 
 class Shelf extends Component {
   render(){
@@ -8,9 +7,7 @@ class Shelf extends Component {
         <h2 className="bookshelf-title">{this.props.title}</h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
-            {this.props.books.map(books => (
-              <Book />
-            ))}
+            {JSON.stringify(this.props.books)}
           </ol>
         </div>
       </React.Fragment>

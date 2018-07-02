@@ -10,7 +10,7 @@ class BooksApp extends React.Component {
   state = {
     currentlyReading: [],
     wantToRead: [],
-    read: [],
+    read: []
   };
 
   async componentWillMount() {
@@ -22,23 +22,23 @@ class BooksApp extends React.Component {
       currentlyReading: currentBooks,
       wantToRead: wantToBooks,
       read: readBooks
-    })
-    console.log(this.state);
+    });
   }
 
-  readingNow = (books) => {
-    return books.filter(book => book.shelf === "currentlyReading")
+  readingNow = books => {
+    return books.filter(book => book.shelf === "currentlyReading");
   };
 
-  willRead = (books) => {
-    return books.filter(book => book.shelf === "wantToRead")
-  }
+  willRead = books => {
+    return books.filter(book => book.shelf === "wantToRead");
+  };
 
-  haveRead = (books) => {
-    return books.filter(book => book.shelf === "read")
-  }
+  haveRead = books => {
+    return books.filter(book => book.shelf === "read");
+  };
 
   render() {
+    const { currentlyReading, wantToRead, read } = this.state;
     return (
       <div className="app">
         <Route
@@ -63,7 +63,11 @@ class BooksApp extends React.Component {
           render={() => (
             <div className="list-books">
               <Header />
-              <BookShelf title="Currently Reading" books={this.state.books} />
+              <BookShelf
+                currentlyReading={currentlyReading}
+                wantToRead={wantToRead}
+                read={read}
+              />
               <ActivateSearch />
             </div>
           )}

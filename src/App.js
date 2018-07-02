@@ -2,7 +2,9 @@ import React from "react";
 import { Route, Link } from "react-router-dom";
 import * as BooksAPI from "./BooksAPI";
 import "./App.css";
-import Shelf from './Shelf';
+import Header from "./Header";
+import BookShelf from "./BookShelf";
+import ActivateSearch from "./ActivateSearch";
 
 class BooksApp extends React.Component {
   state = {
@@ -11,7 +13,11 @@ class BooksApp extends React.Component {
 
   componentDidMount() {
     BooksAPI.getAll().then(books => {
-      this.setState(() => ({ books }));
+      books.map(book => {
+        return this.setState(prevState => ({
+          books: [...prevState.books, book]
+        }));
+      });
     });
   }
 
@@ -39,17 +45,9 @@ class BooksApp extends React.Component {
           path="/"
           render={() => (
             <div className="list-books">
-              <div className="list-books-title">
-                <h1>MyReads</h1>
-              </div>
-              <div className="list-books-content">
-                <Shelf title="Currently Reading"/>
-                <Shelf title="Want To Read"/>
-                <Shelf title="Read"/>
-              </div>
-              <div className="open-search">
-                <Link to="/search" />
-              </div>
+              <Header />
+              <BookShelf title="Currently Reading" books={this.state.books} />
+              <ActivateSearch />
             </div>
           )}
         />

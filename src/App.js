@@ -5,6 +5,8 @@ import "./App.css";
 import Header from "./Header";
 import BookShelf from "./BookShelf";
 import ActivateSearch from "./ActivateSearch";
+import SearchBar from './SearchBar';
+import BookGrid from './BookGrid';
 
 class BooksApp extends React.Component {
   state = {
@@ -45,15 +47,8 @@ class BooksApp extends React.Component {
           path="/search"
           render={() => (
             <div className="search-books">
-              <div className="search-books-bar">
-                <Link className="close-search" to="/" />
-                <div className="search-books-input-wrapper">
-                  <input type="text" placeholder="Search by title or author" />
-                </div>
-              </div>
-              <div className="search-books-results">
-                <ol className="books-grid" />
-              </div>
+              <SearchBar />
+              <BookGrid />
             </div>
           )}
         />

@@ -1,12 +1,12 @@
 import React from "react";
-import { Route, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 import * as BooksAPI from "./BooksAPI";
 import "./App.css";
 import Header from "./Header";
 import BookShelf from "./BookShelf";
 import ActivateSearch from "./ActivateSearch";
-import SearchBar from './SearchBar';
-import BookGrid from './BookGrid';
+import SearchBar from "./SearchBar";
+import BookGrid from "./BookGrid";
 
 class BooksApp extends React.Component {
   state = {
@@ -25,7 +25,31 @@ class BooksApp extends React.Component {
       wantToRead: wantToBooks,
       read: readBooks
     });
+    console.log(this.state);
   }
+
+  handleShelfChange = (book, shelf) => {
+    // BooksAPI.update(book, shelf);
+    switch (shelf) {
+      case "currentlyReading":
+        this.setState(prevState => ({
+          currentlyReading: [...prevState.currentlyReading, book]
+        }));
+        break;
+      case "wantToRead":
+        this.setState(prevState => ({
+          wantToRead: [...prevState.wantToRead, book]
+        }));
+        break;
+      case "read":
+        this.setState(prevState => ({
+          read: [...prevState.read, book]
+        }));
+        break;
+      default:
+        console.log("No Match!");
+    }
+  };
 
   readingNow = books => {
     return books.filter(book => book.shelf === "currentlyReading");
@@ -62,6 +86,7 @@ class BooksApp extends React.Component {
                 currentlyReading={currentlyReading}
                 wantToRead={wantToRead}
                 read={read}
+                handleShelfChange={this.handleShelfChange}
               />
               <ActivateSearch />
             </div>

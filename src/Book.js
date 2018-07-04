@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 
 class Book extends Component {
+  changeShelf = (book, shelf) => {
+    this.props.handleShelfChange(book, shelf);
+  };
+
   render() {
+    const { bookCover, title, authors, book } = this.props;
     return (
       <li>
         <div className="book">
@@ -11,12 +16,11 @@ class Book extends Component {
               style={{
                 width: 128,
                 height: 193,
-                backgroundImage:
-                  `url("${this.props.bookCover})`
+                backgroundImage: `url("${bookCover})`
               }}
             />
             <div className="book-shelf-changer">
-              <select>
+              <select onChange={(e) => this.changeShelf(book, e.target.value)}>
                 <option value="move" disabled>
                   Move to...
                 </option>
@@ -27,8 +31,8 @@ class Book extends Component {
               </select>
             </div>
           </div>
-          <div className="book-title">{this.props.title}</div>
-          <div className="book-authors">{this.props.authors}</div>
+          <div className="book-title">{title}</div>
+          <div className="book-authors">{authors}</div>
         </div>
       </li>
     );

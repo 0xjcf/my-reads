@@ -3,7 +3,13 @@ import Shelf from "./Shelf";
 
 class BookShelf extends Component {
   render() {
-    const { currentlyReading, wantToRead, read } = this.props;
+    const {
+      currentlyReading,
+      wantToRead,
+      read,
+      handleShelfChange
+    } = this.props;
+
     return (
       <div className="list-books-content">
         <div className="bookshelf">
@@ -12,18 +18,21 @@ class BookShelf extends Component {
             currentlyReading={currentlyReading}
             wantToRead={wantToRead}
             read={read}
+            handleShelfChange={handleShelfChange}
           />
           <Shelf
             title="Want to Read"
             currentlyReading={currentlyReading}
             wantToRead={wantToRead}
             read={read}
+            handleShelfChange={handleShelfChange}
           />
           <Shelf
             title="Read"
             currentlyReading={currentlyReading}
             wantToRead={wantToRead}
             read={read}
+            handleShelfChange={handleShelfChange}
           />
         </div>
       </div>

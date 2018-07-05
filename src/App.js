@@ -13,20 +13,28 @@ class BooksApp extends React.Component {
     currentlyReading: [],
     wantToRead: [],
     read: [],
-    none: []
+    none: [],
+    bookList: []
   };
 
+  // === Sets initial State === //
   async componentWillMount() {
+    // API call to grab all books
     const response = await BooksAPI.getAll().then(books => books);
-    const currentBooks = this.readingNow(response);
-    const wantToBooks = this.willRead(response);
-    const readBooks = this.haveRead(response);
+
+    const currentBooks = this.readingNow(response); // Filtered currentlyReading
+    const wantToBooks = this.willRead(response); // Filtered wantToRead
+    const readBooks = this.haveRead(response); // Filtered read
+
+    // Passing in Filtered responses to state
     this.setState({
       currentlyReading: currentBooks,
       wantToRead: wantToBooks,
       read: readBooks
     });
   }
+
+  // === MyReads Page === //
 
   handleShelfChange = (book, shelf) => {
     // BooksAPI.update(book, shelf);
@@ -120,16 +128,28 @@ class BooksApp extends React.Component {
     return books.filter(book => book.shelf === "read");
   };
 
+  // === Search Page === //
+  
+  searchBooks = async query => {
+    const bookList = query
+      ? await BooksAPI.search(query).then(books => books)
+      : [];
+    this.setState({ bookList });
+  };
+
   render() {
-    const { currentlyReading, wantToRead, read } = this.state;
+    const { currentlyReading, wantToRead, read, bookList } = this.state;
     return (
       <div className="app">
         <Route
           path="/search"
           render={() => (
             <div className="search-books">
-              <SearchBar />
-              <BookGrid />
+              <SearchBar searchBooks={this.searchBooks} />
+              <BookGrid
+                bookList={bookList}
+                handleShelfChange={this.handleShelfChange}
+              />
             </div>
           )}
         />

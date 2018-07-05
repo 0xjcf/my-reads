@@ -1,32 +1,28 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
-class SearchBar extends Component {
-  state = {
-    query: ""
+const SearchBar = ({ searchBooks }) => {
+  const updateQuery = query => {
+    searchBooks(query);
   };
 
-  updateQuery = query => {
-    this.setState({ query });
-    this.props.searchBooks(query);
-  };
-
-  render() {
-    const { query } = this.state;
-    return (
-      <div className="search-books-bar">
-        <Link className="close-search" to="/" />
-        <div className="search-books-input-wrapper">
-          <input
-            type="text"
-            placeholder="Search by title or author"
-            value={query}
-            onChange={e => this.updateQuery(e.target.value)}
-          />
-        </div>
+  return (
+    <div className="search-books-bar">
+      <Link className="close-search" to="/" />
+      <div className="search-books-input-wrapper">
+        <input
+          type="text"
+          placeholder="Search by title or author"
+          onChange={e => updateQuery(e.target.value)}
+        />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+SearchBar.propTypes = {
+  searchBooks: PropTypes.func.isRequired
+};
 
 export default SearchBar;

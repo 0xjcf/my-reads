@@ -37,7 +37,6 @@ class BooksApp extends React.Component {
   // === MyReads Page === //
 
   handleShelfChange = (book, shelf) => {
-    // BooksAPI.update(book, shelf);
     this.removeFromShelf(book, shelf);
     this.addToShelf(book, shelf);
   };
@@ -129,12 +128,13 @@ class BooksApp extends React.Component {
   };
 
   // === Search Page === //
-  
+
   searchBooks = async query => {
-    const bookList = query
-      ? await BooksAPI.search(query).then(books => books)
-      : [];
-    this.setState({ bookList });
+    const bookList = await BooksAPI.search(query.trim()).then(books => books);
+    if (bookList !== undefined && !bookList.hasOwnProperty("error")) {
+      this.setState({bookList})
+    }
+    console.log(this.state.bookList)
   };
 
   render() {

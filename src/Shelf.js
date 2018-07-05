@@ -1,58 +1,66 @@
-import React, { Component } from "react";
+import React from "react";
 import Book from "./Book";
+import PropTypes from "prop-types";
 
-class Shelf extends Component {
-  render() {
-    const {
-      currentlyReading,
-      wantToRead,
-      read,
-      handleShelfChange
-    } = this.props;
+const Shelf = props => {
+  const {
+    currentlyReading,
+    wantToRead,
+    read,
+    handleShelfChange,
+    title
+  } = props;
 
-    return (
-      <React.Fragment>
-        <h2 className="bookshelf-title">{this.props.title}</h2>
-        <div className="bookshelf-books">
-          <ol className="books-grid">
-            {this.props.title === "Currently Reading" &&
-              currentlyReading.map((book, i) => (
-                <Book
-                  key={i}
-                  title={book.title}
-                  authors={book.authors}
-                  bookCover={book.imageLinks.thumbnail}
-                  handleShelfChange={handleShelfChange}
-                  book={book}
-                />
-              ))}
-            {this.props.title === "Want to Read" &&
-              wantToRead.map((book, i) => (
-                <Book
-                  key={i}
-                  title={book.title}
-                  authors={book.authors}
-                  bookCover={book.imageLinks.thumbnail}
-                  handleShelfChange={handleShelfChange}
-                  book={book}
-                />
-              ))}
-            {this.props.title === "Read" &&
-              read.map((book, i) => (
-                <Book
-                  key={i}
-                  title={book.title}
-                  authors={book.authors}
-                  bookCover={book.imageLinks.thumbnail}
-                  handleShelfChange={handleShelfChange}
-                  book={book}
-                />
-              ))}
-          </ol>
-        </div>
-      </React.Fragment>
-    );
-  }
-}
+  return (
+    <React.Fragment>
+      <h2 className="bookshelf-title">{title}</h2>
+      <div className="bookshelf-books">
+        <ol className="books-grid">
+          {title === "Currently Reading" &&
+            currentlyReading.map((book, i) => (
+              <Book
+                key={i}
+                title={book.title}
+                authors={book.authors}
+                bookCover={book.imageLinks.thumbnail}
+                handleShelfChange={handleShelfChange}
+                book={book}
+              />
+            ))}
+          {title === "Want to Read" &&
+            wantToRead.map((book, i) => (
+              <Book
+                key={i}
+                title={book.title}
+                authors={book.authors}
+                bookCover={book.imageLinks.thumbnail}
+                handleShelfChange={handleShelfChange}
+                book={book}
+              />
+            ))}
+          {title === "Read" &&
+            read.map((book, i) => (
+              <Book
+                key={i}
+                title={book.title}
+                authors={book.authors}
+                bookCover={book.imageLinks.thumbnail}
+                handleShelfChange={handleShelfChange}
+                book={book}
+              />
+            ))}
+        </ol>
+      </div>
+    </React.Fragment>
+  );
+};
+
+Shelf.propTypes = {
+  title: PropTypes.string.isRequired,
+  currentlyReading: PropTypes.array.isRequired,
+  wantToRead: PropTypes.array.isRequired,
+  read: PropTypes.array.isRequired,
+  handleShelfChange: PropTypes.func.isRequired
+};
 
 export default Shelf;

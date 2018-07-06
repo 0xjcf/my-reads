@@ -15,7 +15,7 @@ const BookGrid = ({ bookList, handleShelfChange }) => {
             bookCover={
               book.imageLinks !== undefined ? book.imageLinks["thumbnail"] : ""
             }
-            handleShelfChang={handleShelfChange}
+            handleShelfChange={handleShelfChange}
             book={book}
           />
         ))}

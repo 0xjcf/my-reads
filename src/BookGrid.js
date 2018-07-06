@@ -8,7 +8,6 @@ const BookGrid = ({ bookList, handleShelfChange }) => {
       <div className="books-grid">
         {bookList.map((book, i) => (
           <Book
-            style={{ float: "left" }}
             key={i}
             title={book.title}
             authors={book.authors}

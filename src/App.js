@@ -37,6 +37,7 @@ class BooksApp extends React.Component {
   // === MyReads Page === //
 
   handleShelfChange = (book, shelf) => {
+    BooksAPI.update(book, shelf);
     this.removeFromShelf(book, shelf);
     this.addToShelf(book, shelf);
   };
@@ -115,14 +116,17 @@ class BooksApp extends React.Component {
     }
   };
 
+  // Filter currentlyReading
   readingNow = books => {
     return books.filter(book => book.shelf === "currentlyReading");
   };
 
+  // Filter wantToRead
   willRead = books => {
     return books.filter(book => book.shelf === "wantToRead");
   };
 
+  // Filter read
   haveRead = books => {
     return books.filter(book => book.shelf === "read");
   };
@@ -137,7 +141,7 @@ class BooksApp extends React.Component {
     }
   };
 
-  clearSearch = (query) => {
+  clearSearch = query => {
     if (query === "") {
       this.setState({ bookList: [] });
     }

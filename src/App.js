@@ -72,7 +72,7 @@ class BooksApp extends React.Component {
         }));
         break;
       default:
-        console.log("error removing book...");
+        console.log("Moving book...");
     }
   };
 

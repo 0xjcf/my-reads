@@ -43,11 +43,11 @@ const Book = props => {
 };
 
 Book.propTypes = {
-  bookCover: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  authors: PropTypes.array.isRequired,
-  book: PropTypes.object.isRequired,
-  handleShelfChange: PropTypes.func.isRequired
+  bookCover: PropTypes.string,
+  title: PropTypes.string,
+  authors: PropTypes.array,
+  book: PropTypes.object,
+  handleShelfChange: PropTypes.func
 };
 
 export default Book;

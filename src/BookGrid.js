@@ -1,22 +1,24 @@
 import React from "react";
-// import Book from "./Book";
-import PropTypes from 'prop-types';
+import Book from "./Book";
+import PropTypes from "prop-types";
 
-const BookGrid = props => {
-  // const {bookList, handleShelfChange} = props;
+const BookGrid = ({ bookList, handleShelfChange }) => {
   return (
     <div className="search-books-results">
       <div className="books-grid">
-            {/*<Book
-        {props.bookList.map((book, i) => (
-              key={i}
-              title={book.title}
-              authors={book.authors}
-              bookCover={book.imageLinks.thumbnail}
-              handleShelfChange={handleShelfChange}
-              book={book}
-          ))}
-            />*/}
+        {bookList.map((book, i) => (
+          <Book
+            style={{ float: "left" }}
+            key={i}
+            title={book.title}
+            authors={book.authors}
+            bookCover={
+              book.imageLinks !== undefined ? book.imageLinks["thumbnail"] : ""
+            }
+            handleShelfChang={handleShelfChange}
+            book={book}
+          />
+        ))}
       </div>
     </div>
   );
@@ -25,6 +27,6 @@ const BookGrid = props => {
 BookGrid.propTypes = {
   bookList: PropTypes.array.isRequired,
   handleShelfChange: PropTypes.func.isRequired
-}
+};
 
 export default BookGrid;

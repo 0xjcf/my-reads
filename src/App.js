@@ -134,15 +134,20 @@ class BooksApp extends React.Component {
   // === Search Page === //
 
   searchBooks = async query => {
-    this.clearSearch(query);
-    const bookList = await BooksAPI.search(query.trim()).then(books => books);
+    const bookList = await BooksAPI.search(query).then(books => books);
+    this.clearSearch(query, bookList);
+    console.log(bookList);
     if (bookList !== undefined && !bookList.hasOwnProperty("error")) {
       this.setState({ bookList });
     }
   };
 
-  clearSearch = query => {
-    if (query === "") {
+  clearSearch = (query, bookList) => {
+    if (
+      query === "" ||
+      bookList.hasOwnProperty("error") ||
+      bookList === undefined
+    ) {
       this.setState({ bookList: [] });
     }
   };

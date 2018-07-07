@@ -23,6 +23,7 @@ const Shelf = props => {
                 title={book.title}
                 authors={book.authors}
                 bookCover={book.imageLinks.thumbnail}
+                shelf={book.shelf}
                 handleShelfChange={handleShelfChange}
                 book={book}
               />
@@ -34,6 +35,7 @@ const Shelf = props => {
                 title={book.title}
                 authors={book.authors}
                 bookCover={book.imageLinks.thumbnail}
+                shelf={book.shelf}
                 handleShelfChange={handleShelfChange}
                 book={book}
               />
@@ -45,6 +47,7 @@ const Shelf = props => {
                 title={book.title}
                 authors={book.authors}
                 bookCover={book.imageLinks.thumbnail}
+                shelf={book.shelf}
                 handleShelfChange={handleShelfChange}
                 book={book}
               />

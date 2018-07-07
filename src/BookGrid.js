@@ -13,10 +13,6 @@ class BookGrid extends Component {
     handleShelfChange: PropTypes.func.isRequired
   };
 
-  componentDidMount(){
-    this.setState({bookList: []})
-  }
-
   render() {
     const { bookList, handleShelfChange } = this.props;
 
@@ -35,7 +31,7 @@ class BookGrid extends Component {
               }
               handleShelfChange={handleShelfChange}
               book={book}
-              shelf={this.state.shelf}
+              shelf={book.shelf}
             />
           ))}
         </div>

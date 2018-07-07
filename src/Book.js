@@ -7,7 +7,7 @@ const Book = props => {
   const changeShelf = (book, shelf) => {
     handleShelfChange(book, shelf);
   };
-
+  
   return (
     <li>
       <div className="book">
@@ -17,7 +17,7 @@ const Book = props => {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: `url("${bookCover})`
+              backgroundImage: `url(${bookCover})`
             }}
           />
           <div className="book-shelf-changer">

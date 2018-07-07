@@ -1,6 +1,7 @@
 import React from "react";
 import Book from "./Book";
 import PropTypes from "prop-types";
+import bookPlaceHolder from './img/noBookCover.png';
 
 const BookGrid = ({ bookList, handleShelfChange }) => {
   return (
@@ -12,7 +13,9 @@ const BookGrid = ({ bookList, handleShelfChange }) => {
             title={book.title}
             authors={book.authors}
             bookCover={
-              book.imageLinks !== undefined ? book.imageLinks["thumbnail"] : ""
+              book.imageLinks !== undefined
+                ? book.imageLinks["thumbnail"]
+                : bookPlaceHolder
             }
             handleShelfChange={handleShelfChange}
             book={book}

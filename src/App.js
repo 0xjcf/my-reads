@@ -136,7 +136,6 @@ class BooksApp extends React.Component {
   searchBooks = async query => {
     const bookList = await BooksAPI.search(query).then(books => books);
     this.clearSearch(query, bookList);
-    console.log(bookList);
     if (bookList !== undefined && !bookList.hasOwnProperty("error")) {
       this.setState({ bookList });
     }

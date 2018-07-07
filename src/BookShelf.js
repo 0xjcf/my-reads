@@ -3,31 +3,25 @@ import Shelf from "./Shelf";
 import PropTypes from 'prop-types';
 
 const BookShelf = props => {
-  const { currentlyReading, wantToRead, read, handleShelfChange } = props;
+  const { books, handleShelfChange } = props;
 
   return (
     <div className="list-books-content">
       <div className="bookshelf">
         <Shelf
           title="Currently Reading"
-          currentlyReading={currentlyReading}
-          wantToRead={wantToRead}
-          read={read}
           handleShelfChange={handleShelfChange}
+          books={books.filter(book => book.shelf === 'currentlyReading')}
         />
         <Shelf
           title="Want to Read"
-          currentlyReading={currentlyReading}
-          wantToRead={wantToRead}
-          read={read}
           handleShelfChange={handleShelfChange}
+          books={books.filter(book => book.shelf === 'wantToRead')}
         />
         <Shelf
           title="Read"
-          currentlyReading={currentlyReading}
-          wantToRead={wantToRead}
-          read={read}
           handleShelfChange={handleShelfChange}
+          books={books.filter(book => book.shelf === 'read')}
         />
       </div>
     </div>
@@ -35,9 +29,7 @@ const BookShelf = props => {
 };
 
 BookShelf.propTypes = {
-  currentlyReading: PropTypes.array.isRequired,
-  wantToRead: PropTypes.array.isRequired,
-  read: PropTypes.array.isRequired,
+  books: PropTypes.array.isRequired,
   handleShelfChange: PropTypes.func.isRequired
 }
 

@@ -4,9 +4,7 @@ import PropTypes from "prop-types";
 
 const Shelf = props => {
   const {
-    currentlyReading,
-    wantToRead,
-    read,
+    books,
     handleShelfChange,
     title
   } = props;
@@ -16,8 +14,8 @@ const Shelf = props => {
       <h2 className="bookshelf-title">{title}</h2>
       <div className="bookshelf-books">
         <ol className="books-grid">
-          {title === "Currently Reading" &&
-            currentlyReading.map((book, i) => (
+          {
+            books.map((book, i) => (
               <Book
                 key={i}
                 title={book.title}
@@ -27,31 +25,8 @@ const Shelf = props => {
                 handleShelfChange={handleShelfChange}
                 book={book}
               />
-            ))}
-          {title === "Want to Read" &&
-            wantToRead.map((book, i) => (
-              <Book
-                key={i}
-                title={book.title}
-                authors={book.authors}
-                bookCover={book.imageLinks.thumbnail}
-                shelf={book.shelf}
-                handleShelfChange={handleShelfChange}
-                book={book}
-              />
-            ))}
-          {title === "Read" &&
-            read.map((book, i) => (
-              <Book
-                key={i}
-                title={book.title}
-                authors={book.authors}
-                bookCover={book.imageLinks.thumbnail}
-                shelf={book.shelf}
-                handleShelfChange={handleShelfChange}
-                book={book}
-              />
-            ))}
+            ))
+          }
         </ol>
       </div>
     </React.Fragment>
@@ -60,9 +35,7 @@ const Shelf = props => {
 
 Shelf.propTypes = {
   title: PropTypes.string.isRequired,
-  currentlyReading: PropTypes.array.isRequired,
-  wantToRead: PropTypes.array.isRequired,
-  read: PropTypes.array.isRequired,
+  books: PropTypes.array.isRequired,
   handleShelfChange: PropTypes.func.isRequired
 };
 

@@ -10,11 +10,8 @@ import BookGrid from "./BookGrid";
 
 class BooksApp extends React.Component {
   state = {
-    currentlyReading: [],
-    wantToRead: [],
-    read: [],
-    none: [],
-    bookList: []
+    bookList: [],
+    searchResults: []
   };
 
   // === Sets initial State === //
@@ -22,15 +19,9 @@ class BooksApp extends React.Component {
     // API call to grab all books
     const response = await BooksAPI.getAll().then(books => books);
 
-    const currentBooks = this.readingNow(response); // Filtered currentlyReading
-    const wantToBooks = this.willRead(response); // Filtered wantToRead
-    const readBooks = this.haveRead(response); // Filtered read
-
-    // Passing in Filtered responses to state
+    // Passing in responses to state
     this.setState({
-      currentlyReading: currentBooks,
-      wantToRead: wantToBooks,
-      read: readBooks
+      bookList: response
     });
   }
 
@@ -38,135 +29,34 @@ class BooksApp extends React.Component {
 
   handleShelfChange = (book, shelf) => {
     BooksAPI.update(book, shelf);
-    this.removeFromShelf(book, shelf);
-    this.addToShelf(book, shelf);
+    // this.removeFromShelf(book, shelf);
+    this.updateShelf(book, shelf);
   };
 
-  removeFromShelf = (book, shelf) => {
-    switch (book.shelf) {
-      case "currentlyReading":
-        book.shelf = shelf;
-        this.setState(prevState => ({
-          currentlyReading: prevState.currentlyReading.filter(
-            book => book.shelf === "currentlyReading"
-          )
-        }));
-        break;
-      case "wantToRead":
-        book.shelf = shelf;
-        this.setState(prevState => ({
-          wantToRead: prevState.wantToRead.filter(
-            book => book.shelf === "wantToRead"
-          )
-        }));
-        break;
-      case "read":
-        book.shelf = shelf;
-        this.setState(prevState => ({
-          read: prevState.read.filter(book => book.shelf === "read")
-        }));
-        break;
-      case "none":
-        book.shelf = shelf;
-        this.setState(prevState => ({
-          none: prevState.none.filter(book => book.shelf === "none")
-        }));
-        break;
-      default:
-        console.log("Moving book...");
-    }
-  };
-
-  addToShelf = (book, shelf) => {
-    switch (shelf) {
-      case "currentlyReading":
-        if (!this.state.currentlyReading.includes(book)) {
-          book.shelf = shelf;
-          this.setState(prevState => ({
-            currentlyReading: prevState.currentlyReading.concat(book)
-          }));
-        }
-        break;
-      case "wantToRead":
-        if (!this.state.wantToRead.includes(book)) {
-          book.shelf = shelf;
-          this.setState(prevState => ({
-            wantToRead: prevState.wantToRead.concat(book)
-          }));
-        }
-        break;
-      case "read":
-        if (!this.state.read.includes(book)) {
-          book.shelf = shelf;
-          this.setState(prevState => ({
-            read: prevState.read.concat(book)
-          }));
-        }
-        break;
-      case "none":
-        if (!this.state.none.includes(book)) {
-          book.shelf = shelf;
-          this.setState(prevState => ({
-            none: prevState.none.concat(book)
-          }));
-        }
-        break;
-      default:
-        console.log("No Match!");
-    }
-  };
-
-  // Filter currentlyReading
-  readingNow = books => {
-    return books.filter(book => book.shelf === "currentlyReading");
-  };
-
-  // Filter wantToRead
-  willRead = books => {
-    return books.filter(book => book.shelf === "wantToRead");
-  };
-
-  // Filter read
-  haveRead = books => {
-    return books.filter(book => book.shelf === "read");
-  };
-
-  noneSelected = books => {
-    const filterNone = books.filter(
-      book => book.shelf === undefined || book.shelf === "none"
-    );
-
-    filterNone.map(book => (book.shelf = "none"));
-
-    return filterNone;
+  updateShelf = (book, shelf) => {
+    this.setState({ book: (book.shelf = shelf) });
   };
 
   // === Search Page === //
 
   searchBooks = async query => {
-    const bookList = await BooksAPI.search(query).then(books => books);
-    this.clearSearch(query, bookList);
-    if (bookList !== undefined && !bookList.hasOwnProperty("error")) {
-      this.setState({ bookList });
+    const books = await BooksAPI.search(query).then(books => books);
+
+    this.clearSearch(query, books);
+
+    if (books !== undefined && !books.hasOwnProperty("error")) {
+      this.setState({ searchResults: books });
     }
-
-    const noneList = this.noneSelected(bookList);
-
-    this.setState({ none: noneList });
   };
 
-  clearSearch = (query, bookList) => {
-    if (
-      query === "" ||
-      bookList.hasOwnProperty("error") ||
-      bookList === undefined
-    ) {
-      this.setState({ bookList: [] });
+  clearSearch = (query, books) => {
+    if (query === "" || books.hasOwnProperty("error") || books === undefined) {
+      this.setState({ searchResults: [] });
     }
   };
 
   render() {
-    const { currentlyReading, wantToRead, read, bookList } = this.state;
+    const { bookList, searchResults } = this.state;
     return (
       <div className="app">
         <Route
@@ -176,6 +66,7 @@ class BooksApp extends React.Component {
               <SearchBar searchBooks={this.searchBooks} />
               <BookGrid
                 bookList={bookList}
+                searchResults={searchResults}
                 handleShelfChange={this.handleShelfChange}
               />
             </div>
@@ -188,9 +79,7 @@ class BooksApp extends React.Component {
             <div className="list-books">
               <Header />
               <BookShelf
-                currentlyReading={currentlyReading}
-                wantToRead={wantToRead}
-                read={read}
+                books={bookList}
                 handleShelfChange={this.handleShelfChange}
               />
               <ActivateSearch />

@@ -4,36 +4,37 @@ import PropTypes from "prop-types";
 import bookPlaceHolder from "./img/noBookCover.png";
 
 class BookGrid extends Component {
-  state = {
-    shelf: ""
-  };
-
   static propTypes = {
     bookList: PropTypes.array.isRequired,
     handleShelfChange: PropTypes.func.isRequired
   };
 
   render() {
-    const { bookList, handleShelfChange } = this.props;
+    const { searchResults, bookList, handleShelfChange } = this.props;
+
+    console.log(searchResults);
 
     return (
       <div className="search-books-results">
         <div className="books-grid">
-          {bookList.map((book, i) => (
-            <Book
-              key={i}
-              title={book.title}
-              authors={book.authors}
-              bookCover={
-                book.imageLinks !== undefined
-                  ? book.imageLinks["thumbnail"]
-                  : bookPlaceHolder
-              }
-              handleShelfChange={handleShelfChange}
-              book={book}
-              shelf={book.shelf}
-            />
-          ))}
+          {bookList.map((result, i) => {
+            const bookListBook = result.find(r => bookList.id === r.id);
+            return (
+              <Book
+                key={i}
+                title={result.title}
+                authors={result.authors}
+                shelf={bookListBook.shelf ? bookListBook.shelf : "none"}
+                bookCover={
+                  result.imageLinks !== undefined
+                    ? result.imageLinks["thumbnail"]
+                    : bookPlaceHolder
+                }
+                handleShelfChange={handleShelfChange}
+                book={result}
+              />
+            );
+          })}
         </div>
       </div>
     );

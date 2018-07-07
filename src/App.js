@@ -131,6 +131,16 @@ class BooksApp extends React.Component {
     return books.filter(book => book.shelf === "read");
   };
 
+  noneSelected = books => {
+    const filterNone = books.filter(
+      book => book.shelf === undefined || book.shelf === "none"
+    );
+
+    filterNone.map(book => (book.shelf = "none"));
+
+    return filterNone;
+  };
+
   // === Search Page === //
 
   searchBooks = async query => {
@@ -139,6 +149,10 @@ class BooksApp extends React.Component {
     if (bookList !== undefined && !bookList.hasOwnProperty("error")) {
       this.setState({ bookList });
     }
+
+    const noneList = this.noneSelected(bookList);
+
+    this.setState({ none: noneList });
   };
 
   clearSearch = (query, bookList) => {

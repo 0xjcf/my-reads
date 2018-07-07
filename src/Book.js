@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const Book = props => {
-  const { bookCover, title, authors, book, handleShelfChange } = props;
+  const { bookCover, title, authors, book, shelf, handleShelfChange } = props;
 
   const changeShelf = (book, shelf) => {
     handleShelfChange(book, shelf);
@@ -23,7 +23,7 @@ const Book = props => {
           <div className="book-shelf-changer">
             <select
               onChange={e => changeShelf(book, e.target.value)}
-              value={book.shelf}
+              value={shelf}
             >
               <option value="move" disabled>
                 Move to...

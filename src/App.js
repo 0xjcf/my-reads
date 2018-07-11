@@ -29,12 +29,14 @@ class BooksApp extends React.Component {
 
   handleShelfChange = (book, shelf) => {
     BooksAPI.update(book, shelf);
-    // this.removeFromShelf(book, shelf);
-    this.updateShelf(book, shelf);
+    book.shelf = shelf;
+    this.updateShelf(book);
   };
 
-  updateShelf = (book, shelf) => {
-    this.setState({ shelf: (book.shelf = shelf) });
+  updateShelf = (book) => {
+    this.setState(prevState => ({
+      bookList: prevState.bookList.filter(b => b !== book ).concat(book)
+    }));
   };
 
   // === Search Page === //

@@ -11,20 +11,18 @@ class BookGrid extends Component {
 
   render() {
     const { searchResults, bookList, handleShelfChange } = this.props;
-
-    console.log(searchResults);
-
     return (
       <div className="search-books-results">
         <div className="books-grid">
-          {bookList.map((result, i) => {
-            const bookListBook = result.find(r => bookList.id === r.id);
+          {searchResults.map((result, i) => {
+            const bookOnShelf = bookList.find(
+              book => book.id === result.id
+            );
             return (
               <Book
                 key={i}
                 title={result.title}
                 authors={result.authors}
-                shelf={bookListBook.shelf ? bookListBook.shelf : "none"}
                 bookCover={
                   result.imageLinks !== undefined
                     ? result.imageLinks["thumbnail"]
@@ -32,6 +30,9 @@ class BookGrid extends Component {
                 }
                 handleShelfChange={handleShelfChange}
                 book={result}
+                shelf={
+                  bookOnShelf !== undefined ? bookOnShelf.shelf : "none"
+                }
               />
             );
           })}

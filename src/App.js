@@ -34,7 +34,7 @@ class BooksApp extends React.Component {
   };
 
   updateShelf = (book, shelf) => {
-    this.setState({ book: (book.shelf = shelf) });
+    this.setState({ shelf: (book.shelf = shelf) });
   };
 
   // === Search Page === //
@@ -49,6 +49,7 @@ class BooksApp extends React.Component {
     }
   };
 
+  // Handles "" query or undefined book (object)
   clearSearch = (query, books) => {
     if (query === "" || books.hasOwnProperty("error") || books === undefined) {
       this.setState({ searchResults: [] });

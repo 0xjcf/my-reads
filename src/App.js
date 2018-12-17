@@ -14,7 +14,7 @@ class BooksApp extends React.Component {
     searchResults: []
   };
 
-  // === Sets initial State === //
+  // Sets initial State //
   async componentWillMount() {
     // API call to grab all books
     const response = await BooksAPI.getAll().then(books => books);
@@ -25,8 +25,7 @@ class BooksApp extends React.Component {
     });
   }
 
-  // === MyReads Page === //
-
+  // MyReads Page //
   handleShelfChange = (book, shelf) => {
     BooksAPI.update(book, shelf);
     book.shelf = shelf;
@@ -39,8 +38,7 @@ class BooksApp extends React.Component {
     }));
   };
 
-  // === Search Page === //
-
+  // Search Page //
   searchBooks = async query => {
     const books = await BooksAPI.search(query).then(books => books);
 
@@ -66,7 +64,10 @@ class BooksApp extends React.Component {
           path="/search"
           render={() => (
             <div className="search-books">
-              <SearchBar searchBooks={this.searchBooks} />
+              <SearchBar 
+                searchBooks={this.searchBooks} 
+                placeholder="Search by title or author"
+              />
               <BookGrid
                 bookList={bookList}
                 searchResults={searchResults}

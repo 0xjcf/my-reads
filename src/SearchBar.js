@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const SearchBar = ({ searchBooks }) => {
+const SearchBar = (props) => {
+  const { searchBooks, placeholder } = props
   const updateQuery = query => {
     searchBooks(query);
   };
@@ -13,7 +14,7 @@ const SearchBar = ({ searchBooks }) => {
       <div className="search-books-input-wrapper">
         <input
           type="text"
-          placeholder="Search by title or author"
+          placeholder={placeholder}
           onChange={e => updateQuery(e.target.value)}
         />
       </div>

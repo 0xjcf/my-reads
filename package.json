@@ -1,4 +1,5 @@
 {
+  "homepage": "https://jcflores.github.io/my-reads/",
   "dependencies": {
     "gh-pages": "^2.0.1",
     "prop-types": "^15.6.1",
@@ -17,7 +18,6 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage": "https://jcflores.github.io/my-reads/",
   "browserslist": [
     ">0.2%",
     "not dead",
